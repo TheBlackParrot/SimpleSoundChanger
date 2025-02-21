@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
+  "id": "SimpleSoundChanger",
+  "name": "SimpleSoundChanger",
+  "author": "TheBlackParrot",
+  "version": "0.0.0",
+  "description": "Change some of the game's sound effects",
+  "gameVersion": "1.40.0",
+  "dependsOn": {
+    "BSIPA": "^4.2.0",
+    "BeatSaberMarkupLanguage": "^1.5.12",
+    "SiraUtil": "^3.0.0"
+  }
+}
