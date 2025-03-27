@@ -90,7 +90,6 @@ namespace SimpleSoundChanger.Patches
         }
         
         private static AudioClip _cachedMenuMusic;
-        
         private static AudioClip MenuMusic
         {
             get
@@ -118,6 +117,10 @@ namespace SimpleSoundChanger.Patches
             ref AudioClip[] ____longCutEffectsAudioClips, ref AudioClip[] ____shortCutEffectsAudioClips)
         {
             AudioClip[] hitSounds = HitSounds;
+            if (hitSounds.Length == 0)
+            {
+                return;
+            }
 
             ____shortCutEffectsAudioClips = hitSounds;
             ____longCutEffectsAudioClips = hitSounds;
@@ -128,6 +131,10 @@ namespace SimpleSoundChanger.Patches
         public static void MissPatch(ref AudioClip[] ____badCutSoundEffectAudioClips)
         {
             AudioClip[] missSounds = MissSounds;
+            if (missSounds.Length == 0)
+            {
+                return;
+            }
 
             ____badCutSoundEffectAudioClips = missSounds;
         }
@@ -137,15 +144,24 @@ namespace SimpleSoundChanger.Patches
         public static void ClickPatch(ref AudioClip[] ____clickSounds)
         {
             AudioClip[] clickSounds = ClickSounds;
+            if (clickSounds.Length == 0)
+            {
+                return;
+            }
 
             ____clickSounds = clickSounds;
         }
 
         [HarmonyPatch(typeof(SongPreviewPlayer), "Start")]
         [HarmonyPrefix]
-        public static void MenuMusicPatch(ref AudioClip ____defaultAudioClip)
+        public static void MenuMusicPatch(SongPreviewPlayer __instance, ref AudioClip ____defaultAudioClip, ref float ____volumeScale)
         {
-            ____defaultAudioClip = MenuMusic;
+            AudioClip menuMusic = MenuMusic;
+            
+            if (menuMusic != null)
+            {
+                ____defaultAudioClip = menuMusic;
+            }
         }
     }
 }
