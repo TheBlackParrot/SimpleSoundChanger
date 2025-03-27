@@ -3,15 +3,15 @@ using System.Reflection;
 using HarmonyLib;
 using IPA;
 using IPA.Utilities;
+using JetBrains.Annotations;
 using SiraUtil.Zenject;
 using IPALogger = IPA.Logging.Logger;
 
 namespace SimpleSoundChanger
 {
-    [Plugin(RuntimeOptions.DynamicInit)]
+    [Plugin(RuntimeOptions.DynamicInit), UsedImplicitly]
     public class Plugin
     {
-        internal static Plugin Instance { get; private set; }
         internal static IPALogger Log { get; private set; }
         
         private static Harmony _harmony;
@@ -21,7 +21,6 @@ namespace SimpleSoundChanger
         [Init]
         public void Init(Zenjector zenjector, IPALogger logger)
         {
-            Instance = this;
             Log = logger;
 
             zenjector.UseLogger(logger);

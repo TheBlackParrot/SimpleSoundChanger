@@ -13,16 +13,11 @@
         <Product>SimpleSoundChanger</Product>
         <Copyright>Copyright © TheBlackParrot</Copyright>
         <BSMTProjectType>BSIPA</BSMTProjectType>
+        <Configurations>Release-1.29.1;Debug-1.29.1</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
-    <PropertyGroup Condition="$(DefineConstants.Contains('CIBuild')) OR '$(NCrunch)' == '1'">
-        <DisableCopyToPlugins>True</DisableCopyToPlugins>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(NCrunch)' == '1'">
-        <DisableCopyToPlugins>True</DisableCopyToPlugins>
-        <DisableZipRelease>True</DisableZipRelease>
-    </PropertyGroup>
+    
     <ItemGroup>
-        <Reference Include="System.Data.DataSetExtensions"/>
         <Reference Include="0Harmony, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
             <SpecificVersion>False</SpecificVersion>
             <HintPath>$(BeatSaberDir)\Libs\0Harmony.dll</HintPath>
@@ -74,6 +69,10 @@
             <Version>2.0.0-beta7</Version>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="LunaBSMod.Tasks" Version="1.1.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>

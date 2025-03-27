@@ -19,13 +19,6 @@
   </Target>
   <!--Runs a build task to get info about the project used by later targets.-->
   <Target Name="GetProjectInfo" AfterTargets="CheckBSMTInstalled" DependsOnTargets="CheckBSMTInstalled" Condition="'$(BSMTTaskAssembly)' != ''">
-    <GenerateManifest ID="$(AssemblyName)" Name="$(AssemblyName)" Author="$(Authors)" Description="$(Description)"
-                      Version="$(Version)" GameVersion="$(GameVersion)" DependsOn="@(Dependency)"
-                      ProjectHome="$(ProjectHome)" ProjectSource="$(ProjectSource)" Donate="$(Donate)"
-                      TargetPath="$(IntermediateOutputPath)manifest.json"/>
-    <ItemGroup>
-      <EmbeddedResource Include="$(IntermediateOutputPath)manifest.json" LogicalName="$(AssemblyName).manifest.json" />
-    </ItemGroup>
     <GetCommitInfo ProjectDir="$(ProjectDir)">
       <Output TaskParameter="CommitHash" PropertyName="CommitHash" />
       <Output TaskParameter="Branch" PropertyName="Branch" />
@@ -55,7 +48,7 @@
     <Copy SourceFiles="$(OutputAssemblyName).pdb" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\Plugins\$(AssemblyName).pdb" />
   </Target>
   <!--Creates a BeatMods compliant zip file with the release.-->
-  <Target Name="ZipRelease" AfterTargets="Build" Condition="'$(DisableZipRelease)' != 'True' AND '$(Configuration)' == 'Release' AND '$(BSMTTaskAssembly)' != ''">
+  <Target Name="ZipRelease" AfterTargets="Build" Condition="'$(BSMTTaskAssembly)' != ''">
     <PropertyGroup>
       <!--Set 'ArtifactName' if it failed before.-->
       <ArtifactName Condition="'$(ArtifactName)' == ''">$(AssemblyName)</ArtifactName>
@@ -65,6 +58,7 @@
       <OldZips Include="$(DestinationDirectory)$(AssemblyName)*.zip"/>
     </ItemGroup>
     <Copy SourceFiles="$(OutputAssemblyName).dll" DestinationFiles="$(ArtifactDestination)\Plugins\$(AssemblyName).dll" />
+    <Copy SourceFiles="$(OutputAssemblyName).pdb" DestinationFiles="$(ArtifactDestination)\Plugins\$(AssemblyName).pdb" />
     <Message Text="Version: $(Version), GameVersion: $(GameVersion)" Importance="high" />
     <Delete Files="@(OldZips)" TreatErrorsAsWarnings="true" ContinueOnError="true" />
     <ZipDir SourceDirectory="$(ArtifactDestination)" DestinationFile="$(DestinationDirectory)$(ArtifactName).zip" />
